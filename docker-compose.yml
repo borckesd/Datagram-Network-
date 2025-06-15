@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  datagram:
+    build: .
+    container_name: datagram-cli
+    restart: unless-stopped
+    environment:
+      - DATAGRAM_KEY=${DATAGRAM_KEY}
+    command: ["run", "--", "-key", "${DATAGRAM_KEY}"]
+
