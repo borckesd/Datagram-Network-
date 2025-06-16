@@ -63,13 +63,16 @@ Your project should have these files:
 ```dockerfile
 FROM debian:bookworm-slim
 
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y ca-certificates tini procps && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY datagram-cli /app/datagram-cli
+RUN chmod +x /app/datagram-cli
 
 WORKDIR /app
 
-ENTRYPOINT ["./datagram-cli"]
+ENTRYPOINT ["/usr/bin/tini", "--", "./datagram-cli"]
 ```
 
 
